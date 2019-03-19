@@ -1,15 +1,29 @@
 package guru.springframework.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+/**
+ * Created by jt on 5/24/17.
+ */
 @Service
 @Primary
 @Profile("de")
-public class PrimaryGermanGreetingService  implements GreetingService{
+public class PrimaryGermanGreetingService implements GreetingService {
+
+    public PrimaryGermanGreetingService(GreetingRepository greetingRepository) {
+        this.greetingRepository = greetingRepository;
+    }
+
+    private GreetingRepository greetingRepository;
+
     @Override
     public String sayGreeting() {
-        return "Hauptgrußdienst";
+        return greetingRepository.getGermanGreeting();
     }
 }
